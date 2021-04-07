@@ -1,0 +1,55 @@
+[PrefixDeclaration]
+:		http://cici.lab.asu.edu/ontology/farm_to_table#
+dc:		http://purl.org/dc/terms/
+geo:		http://www.opengis.net/ont/geosparql#
+owl:		http://www.w3.org/2002/07/owl#
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+xml:		http://www.w3.org/XML/1998/namespace
+xsd:		http://www.w3.org/2001/XMLSchema#
+obda:		https://w3id.org/obda/vocabulary#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+
+[MappingDeclaration] @collection [[
+
+mappingId	CA_Transportation
+target		:road.{gid} a :Road_Element; geo:defaultGeometry geo:geometry.{gid}; :hasGID {gid}^^xsd:integer; :roadName {lname}^^xsd:string; :roadID {routeID}^^xsd:string; :roadLength {shape_leng}^^xsd:double;.
+source		select gid, lname, routeID, shape_leng from cali_highway
+
+mappingId	Cali_Transportation_Geometry
+target		geo:geometry.{gid} geo:asWKT {geom}^^geo:wktLiteral.
+source		select gid, geom from cali_highway
+
+mappingId	Cali_Administrative_Boundary
+target		:boundary.{gid} a :Administrative_Boundary; geo:defaultGeometry geo:geometry.{gid}; :hasGID {gid}^^xsd:integer;  :boundaryName {name}^^xsd:string.
+source		select gid, name from cali_administrativeboundaries
+
+mappingId	Cali_Administrative_Boundary_Geometry
+target		geo:geometry.{gid} geo:asWKT {geom}^^geo:wktLiteral.
+source		select gid, geom from cali_administrativeboundaries
+
+mappingId	Cali_PointofInterest
+target		:poi.{gid} a :PointOfInterest; geo:defaultGeometry geo:geometry.{gid}; :hasGID {gid}^^xsd:integer; :pointOfInterestCategory {category}^^xsd:string; :pointOfInterestName {name}^^xsd:string.
+source		select gid, category, name from cali_pointsofinterest
+
+mappingId	Cali_PointofInterest_Geometry
+target		geo:geometry.{gid} geo:asWKT {geom}^^geo:wktLiteral.
+source		select gid, geom from cali_pointsofinterest
+
+mappingId	Cali_Wildfire
+target		:wildfire.{gid} a :Wildfire; geo:defaultGeometry geo:geometry.{gid}; :hasGID {gid}^^xsd:integer; :eventDate {ig_date}^^xsd:date; :eventID {event_id}^^xsd:string; :eventName {incid_name}^^xsd:string; :eventType {incid_type}^^xsd:string.
+source		select gid, ig_date, event_id, incid_name, incid_type from cali_wildfire
+
+mappingId	Cali_Wildfire_Geometry
+target		geo:geometry.{gid} geo:asWKT {geom}^^geo:wktLiteral.
+source		select gid, geom from cali_wildfire
+
+mappingId	Cali_SSURGO
+target		:ssurgo.{gid} a :Soil_Area; geo:defaultGeometry geo:geometry.{gid}; :hasGID {gid}^^xsd:integer; :cornSuitabilityRating {iacornsr}^^xsd:integer; :farmlandClass {farmlndcl}^^xsd:string;
+:mapUnitKind {mukind}^^xsd:string; :mapUnitName {muname}^^xsd:string;
+:meanAnnualTemperature_Representative {airtempa_r}^^xsd:double; :soilArea {Shape_Area}^^xsd:double.
+source		select gid, iacornsr, farmlndcl, mukind, muname,  , Shape_Area from cali_ssurgo
+
+mappingId	Cali_SSURGO_Geometry
+target		geo:geometry.{gid} geo:asWKT {geom}^^geo:wktLiteral.
+source		select gid, geom from cali_ssurgo
+]]
